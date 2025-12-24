@@ -1,0 +1,30 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Publish
+publish/
+
+# LibMan cache
+wwwroot/lib/
+
+# Logs
+*.log
+
+# Database files
+*.mdf
+*.ldf
+
+# Others
+*.tmp

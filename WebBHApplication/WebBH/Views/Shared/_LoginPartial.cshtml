@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebBH.Areas.Data
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="navbar-nav me-5">
+@if (SignInManager.IsSignedIn(User))
+{
+        <li class="header__right__auth">
+            @{
+                //Khi truyền User vào GetUserAsync, thì UserManager sẽ dùng thông tin từ token/claim đó 
+                //để tìm ra đối tượng AppUser tương ứng trong database.
+                var CurrentUser = await UserMgrFind.GetUserAsync(User);
+                string firstName = "Guest";
+                if(CurrentUser is not null)
+                {
+                    firstName = CurrentUser.FirstName;
+                }
+
+            }
+             <a  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Xin chào @firstName
+                @if(User.IsInRole("Admin"))
+                    {
+                        <Span>(Admin)</Span>
+                    }
+            </a>
+            
+            <form class="d-inline"
+                  asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  asp-route-returnUrl='@Url.Action("Index", "Home", new { area = "" })'
+                  method="post">                 
+                <button type="submit" class="btn logout-link">Đăng xuất</button>
+            </form>
+    </li>
+        <li class="nav-item small">
+        
+        </li>
+
+        @* <li style="font-size:13px">
+            <form class="d-inline " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="btn btn-link nav-link p-0 m-0 align-baseline">Logout</button>
+            </form>
+
+        </li> *@
+}
+else
+{
+        <Li class="header__right__auth">
+            <a asp-area="Identity" asp-page="/Account/Login" role="button" data-bs-toggle="dropdown" aria-expanded="false">Đăng nhập</a>
+            <a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
+        </Li>
+}
+</ul>

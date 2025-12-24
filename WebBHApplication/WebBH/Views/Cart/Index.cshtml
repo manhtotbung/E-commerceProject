@@ -1,0 +1,150 @@
+﻿@model IEnumerable<WebBH.Models.CartItem>
+
+   <!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__close">+</div>
+    <ul class="offcanvas__widget">
+        <li><span class="icon_search search-switch"></span></li>
+        <li>
+            <a href="#">
+                <span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+    </ul>
+    <div class="offcanvas__logo">
+        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__auth">
+        <a href="#">Login</a>
+        <a href="#">Register</a>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <span>Shopping cart</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Cart Section Begin -->
+<section class="shop-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>                                
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var Item in Model)
+                            {
+                                <tr class="cart-row" data-id="@Item.ProductId" data-unit="@Item.UnitPrice">
+                                    <td class="cart__product__item">
+                                        <img src="@Item.ProductImage" alt="Anh_@Item.ProductName">
+                                        <div class="cart__product__item__title">
+                                            <h6>@Item.ProductName</h6>
+                                            <div class="cart__meta">
+                                                <span>Màu: <strong>@Item.Color</strong></span>
+                                                <span class="sep">•</span>
+                                                <span>Size: <strong>@Item.Size</strong></span>
+                                            </div>
+                                        </div>                                 
+                                    </td>
+                                    
+
+                                    <td class="cart__price">@Item.UnitPrice.ToString("N0") vnd</td>
+
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty">
+                                            <span class="dec qtybtn">-</span>
+                                            <input type="text" value="@Item.Quantity" inputmode="numeric">
+                                            <span class="inc qtybtn">+</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="cart__total">@((Item.UnitPrice * Item.Quantity).ToString("N0")) vnd</td>
+
+                                    <td class="text-center">
+                                        <form asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@Item.ProductId" asp-route-VariantId="@Item.VariantId" method="post" class="m-0">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-link p-0 cart__close" aria-label="Xóa">
+                                                <i class="bi bi-x" style="font-size:1.75rem;"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                        @* Ví dụ khu tổng tiền *@
+                        <div class="mt-3 fw-semibold">
+                            Tổng: <span id="cartTotal">@Model.Sum(x => x.UnitPrice * x.Quantity).ToString("N0") vnd</span>
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn">
+                    <a href="#">Continue Shopping</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn update__btn">
+                    <a href="#"><span class="icon_loading"></span> Update cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="discount__content">
+                    <h6>Discount codes</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Enter your coupon code">
+                        <button type="submit" class="site-btn">Apply</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-2">
+                <div class="cart__total__procced">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li>Subtotal <span>$ 750.0</span></li>
+                        <li>Total <span>$ 750.0</span></li>
+                    </ul>
+                    <a asp-action="CheckOut" asp-controller="Cart" class="primary-btn">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Cart Section End -->

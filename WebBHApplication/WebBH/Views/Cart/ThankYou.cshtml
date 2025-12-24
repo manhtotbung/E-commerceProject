@@ -1,0 +1,444 @@
+﻿@model WebBH.Models.Order
+@using System.Globalization
+@{
+    ViewData["Title"] = "Cám ơn bạn";
+    var vi = CultureInfo.GetCultureInfo("vi-VN");
+    string Vnd(decimal v) => string.Format(vi, "{0:N0} ₫", v);
+    string Dt(DateTime d) => d.ToString("dd/MM/yyyy HH:mm");
+}
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__close">+</div>
+    <ul class="offcanvas__widget">
+        <li><span class="icon_search search-switch"></span></li>
+        <li>
+            <a href="#">
+                <span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+    </ul>
+    <div class="offcanvas__logo">
+        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__auth">
+        <a href="#">Login</a>
+        <a href="#">Register</a>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Trang chủ</a>
+                    <span> Đơn hàng của bạn</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div class="container py-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="me-3">
+            <span class="badge bg-success rounded-pill px-3 py-2 badge-xl">
+                <i class="bi bi-check2-circle me-1"></i> Đặt hàng thành công
+            </span>
+        </div>
+        <h1 class="h4 mb-0">Cảm ơn bạn đã đặt hàng!</h1>
+    </div>
+
+    <div class="row g-4">
+        <!-- Cột trái: Thông tin & sản phẩm -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="order-meta row g-3 g-md-4 align-items-center mb-4 ps-3 ps-lg-4">
+
+                        <div class="col-12 col-md-auto meta-block">
+                            <div class="text-muted small">Mã đơn</div>
+                            <div class="d-flex align-items-center">
+                                <span id="orderCode" class="fw-semibold me-2">@Model.Id</span>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" id="btnCopyCode" aria-label="Copy mã đơn">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-md-none"><hr class="my-0"></div> <!-- ngăn cách nhẹ trên mobile -->
+
+                        <div class="col-12 col-md-auto meta-block">
+                            <div class="text-muted small">Ngày tạo</div>
+                            <div class="fw-semibold">@Dt(Model.CreatedAt)</div>
+                        </div>
+                    </div>
+
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <div class="text-muted mb-1">Người nhận</div>
+                                <div class="fw-semibold">@Model.FullName</div>
+                                <div class="small text-muted">@Model.Phone</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <div class="text-muted mb-1">Địa chỉ giao hàng</div>
+                                <div class="fw-semibold">@Model.Address</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:45%">Sản phẩm</th>
+                                    <th style="width:20%">Phân loại</th>
+                                    <th style="width:15%" class="text-center">SL</th>
+                                    <th style="width:20%" class="text-end">Đơn giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.Items)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">
+                                            @i.ProductName
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-light text-dark border">@i.Color</span>
+                                            <span class="badge bg-light text-dark border ms-1">@i.Size</span>
+                                        </td>
+                                        <td class="text-center">@i.Quantity</td>
+                                        <td class="text-end">@Vnd(i.UnitPrice)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: Tóm tắt đơn -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <h2 class="h6 mb-0">Tóm tắt đơn hàng</h2>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Tạm tính</span>
+                        <span class="fw-semibold">@Vnd(Model.Subtotal)</span>
+                    </div>
+
+                    <hr>
+                    <div class="d-flex justify-content-between fs-5">
+                        <span>Thành tiền</span>
+                        <span class="fw-bold text-success">@Vnd(Model.Total)</span>
+                    </div>
+
+                    <div class="action-stack mt-4">
+                        <button class="btn-red" type="button" id="btnPrint">
+                            <i class="bi bi-printer"></i> In hóa đơn
+                        </button>
+
+                        <a class="btn-red" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-bag"></i> Tiếp tục mua sắm
+                        </a>
+
+                        <a class="btn-red" asp-controller="Order" asp-action="MyOrders">
+                            <i class="bi bi-list-ul"></i> Xem lịch sử đơn hàng
+                        </a>
+                    </div>
+
+
+
+                </div>
+                <div class="card-footer bg-white small text-muted">
+                    * Bạn sẽ nhận được email xác nhận đơn hàng nếu đã nhập email trong quá trình thanh toán.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        /* Stack các nút theo cột, khoảng cách đều */
+        .action-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* tăng/giảm nếu muốn */
+        }
+
+        /* Nút đỏ tùy biến, không phụ thuộc template */
+        :root {
+            --btn-red: #d32f2f;
+            --btn-red-hover: #b71c1c;
+            --btn-red-text: #fff;
+            --btn-radius: 28px; /* bo tròn kiểu pill */
+        }
+
+        .btn-red {
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--btn-red);
+            color: var(--btn-red-text);
+            border: 0;
+            border-radius: var(--btn-radius);
+            padding: .9rem 1.25rem;
+            width: 100%;
+            display: flex; /* canh icon + text đẹp */
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            font-weight: 700;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 0 rgba(0,0,0,.06);
+            transition: background-color .15s ease, transform .02s ease, box-shadow .15s ease;
+            text-decoration: none; /* cho <a> */
+            line-height: 1.2;
+        }
+
+            .btn-red:hover,
+            a.btn-red:hover {
+                background: var(--btn-red-hover);
+                color: var(--btn-red-text);
+                text-decoration: none;
+            }
+
+            .btn-red:active {
+                transform: translateY(1px);
+            }
+
+            .btn-red:focus {
+                outline: 2px solid rgba(211,47,47,.3);
+                outline-offset: 2px;
+            }
+
+            .btn-red[disabled], .btn-red.disabled {
+                opacity: .6;
+                cursor: not-allowed;
+            }
+
+        /* Nếu vẫn còn rule margin/float từ theme, triệt tiêu luôn */
+        .btn-red {
+            float: none !important;
+            margin: 0 !important;
+            display: flex !important;
+        }
+
+        /* Tuỳ chọn: phiên bản viền đỏ nền trắng */
+        .btn-red--outline {
+            background: #fff;
+            color: var(--btn-red);
+            border: 2px solid var(--btn-red);
+        }
+
+            .btn-red--outline:hover {
+                color: var(--btn-red-hover);
+                border-color: var(--btn-red-hover);
+            }
+
+        .checkout__order .action-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* khoảng cách chuẩn */
+        }
+
+            .checkout__order .action-stack .site-btn {
+                display: block !important; /* dẹp inline/float của theme */
+                width: 100% !important; /* full chiều ngang */
+                margin: 0 !important; /* xoá mọi margin trái/phải sẵn có */
+                float: none !important; /* đề phòng theme dùng float */
+                line-height: 1.2; /* tránh nút quá “dầy” */
+            }
+
+
+        /* Làm thoáng cụm meta (mã đơn / ngày tạo) */
+        .order-meta .meta-block {
+            min-width: 240px;
+        }
+        /* giữ khoảng cách ổn trên desktop */
+        .order-meta hr {
+            opacity: .12;
+        }
+        /* đường kẻ ngăn mobile nhẹ nhàng */
+
+        /* Nút copy gọn gàng hơn */
+        #btnCopyCode.btn-sm {
+            padding: .125rem .5rem;
+            line-height: 1.2;
+        }
+
+        /* Nút hành động: đảm bảo full width & cách đều */
+        .checkout__order .action-stack .site-btn {
+            display: block;
+            width: 100%;
+        }
+
+        .badge-xl {
+            font-size: 1.25rem; /* ~20px, chỉnh theo ý */
+            padding: .6rem 1rem; /* đệm lớn hơn */
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .badge.border {
+            border-color: #e5e7eb;
+        }
+        /* nhẹ nhàng */
+    </style>
+}
+
+@section Scripts {
+    <script>
+        // In hóa đơn
+        document.getElementById('btnPrint')?.addEventListener('click', () => window.print());
+
+        // Copy mã đơn
+        document.getElementById('btnCopyCode')?.addEventListener('click', async () => {
+            const code = document.getElementById('orderCode')?.innerText ?? '';
+            try {
+                await navigator.clipboard.writeText(code);
+                const btn = document.getElementById('btnCopyCode');
+                btn.innerHTML = '<i class="bi bi-check2"></i> Đã copy';
+                setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy', 1500);
+            } catch { /* ignore */ }
+        });
+    </script>
+}
+<!-- Order Section Begin -->
+@* 
+<section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h5>Cảm ơn bạn đã đặt hàng!</h5>
+                <span class="badge bg-success rounded-pill px-3 py-2">
+                    <i class="bi bi-check2-circle me-1"></i> Đặt hàng thành công
+                </span>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="checkout__form__input">
+                            <p>Họ Tên <span>*</span></p>
+                            <input name="FullName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="checkout__form__input">
+                            <p>Địa chỉ <span>*</span></p>
+                            <input name="Address" type="text" placeholder="Nhập địa chỉ của bạn">
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="checkout__form__input">
+                            <p>Số điện thoại <span>*</span></p>
+                            <input name="Phone" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="checkout__form__input">
+                            <p>Email <span>*</span></p>
+                            <input name="Email" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="checkout__form__checkbox">
+                            <label for="note">
+                                Note about your order, e.g, special noe for delivery
+                                <input type="checkbox" id="note">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__form__input">
+                            <p>Oder notes <span>*</span></p>
+                            <input name="Note" type="text"
+                                   placeholder="Note about your order, e.g, special noe for delivery">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="checkout__order">
+                    <h5>Tóm tắt đơn hàng</h5>
+                    <div class="checkout__order__product">
+                        <ul>
+
+
+                            <li class="text-muted">Tạm tính</li>
+                            <li class="fw-semibold">@Vnd(Model.Subtotal)</li>
+
+                            <li>Thành tiền</li>
+                            <li class="fw-bold text-success">@Vnd(Model.Total)</li>
+
+
+
+                        </ul>
+                    </div>
+                    <div class="checkout__order__total">
+                        <ul>
+                            <li>Subtotal <span>@Model.Subtotal.ToString("N0") vnđ</span></li>
+                            <li>Total <span>@Model.Total.ToString("N0") vnđ </span></li>
+                        </ul>
+                    </div>
+                    <div class="checkout__order__widget">
+
+                        <label for="check-payment">
+                            Cheque payment
+                            <input type="checkbox" id="check-payment">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label for="paypal">
+                            PayPal
+                            <input type="checkbox" id="paypal">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+
+                    <button class="site-btn" type="button" id="btnPrint">
+                        <i class="bi bi-printer"></i> In hóa đơn
+                    </button>
+
+                    <a class="site-btn" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-bag"></i> Tiếp tục mua sắm
+                    </a>
+                    <a class="site-btn" asp-controller="Order" asp-action="MyOrders">
+                        <i class="bi bi-list-ul"></i> Xem lịch sử đơn hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section> *@
+<!-- Checkout Section End -->

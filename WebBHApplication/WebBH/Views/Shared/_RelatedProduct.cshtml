@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebBH.Models.Product>
+
+@foreach (var relatedProduct in Model)
+{
+    var demoImg = "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80";
+    var imgUrl = relatedProduct.Product_Imgs.FirstOrDefault(p => p.IsPrimary == true)?.ImageUrl ?? demoImg;
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="product__item" data-url="@Url.Action("ProductDetail", "Product", new { id = relatedProduct.Id })" style="cursor:pointer">
+            <div class="product__item__pic set-bg clickable" data-setbg="@imgUrl">
+                <div class="label new">New</div>
+                <ul class="product__hover">
+                    <li><a href="@imgUrl" class="image-popup"><i class="bi bi-arrows-angle-expand"></i></a></li>
+                    <li><a href="#" class="add-to-favorites"><i class="bi bi-heart"></i></a></li>
+                    <li><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@relatedProduct.Id" class="add-to-cart"><i class="bi bi-bag"></i></a></li>
+                </ul>
+            </div>
+            <div class="product__item__text" data-url="@Url.Action("ProductDetail", "Product", new { id = relatedProduct.Id })" style="cursor:pointer">
+                <h6><a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@relatedProduct.Id">@relatedProduct.Name</a></h6>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <div class="product__price">$ 59.0</div>
+            </div>
+        </div>
+    </div>
+
+}
+@* 
+@model IEnumerable<WebBH.Models.Product>
+
+@foreach (var relatedProduct in Model)
+{
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="product__item clickable" data-url="@Url.Action("ProductDetail", "Product", new { id = relatedProduct.Id })">
+            <div class="product__item__pic set-bg"
+                 data-setbg="@relatedProduct.Product_Imgs.FirstOrDefault(p => p.IsPrimary)?.ImageUrl">
+                <div class="label new">New</div>
+                <ul class="product__hover">
+                    <li>
+                        <a href="@relatedProduct.Product_Imgs.FirstOrDefault(p => p.IsPrimary)?.ImageUrl"
+                           class="image-popup"><i class="bi bi-arrows-angle-expand"></i></a>
+                    </li>
+                    <li><a href="#" class="add-to-favorites"><i class="bi bi-heart"></i></a></li>
+                    <li><a href="#" class="add-to-cart"><i class="bi bi-bag"></i></a></li>
+                </ul>
+            </div>
+            <div class="product__item__text">
+                <h6><a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@relatedProduct.Id">@relatedProduct.Name</a></h6>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <div class="product__price">$ 59.0</div>
+            </div>
+        </div>
+    </div>
+} *@

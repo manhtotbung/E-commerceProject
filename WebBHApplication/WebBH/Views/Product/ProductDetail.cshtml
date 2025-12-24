@@ -1,0 +1,432 @@
+﻿@model WebBH.Models.ProductDetailViewModel
+@section Styles {
+
+}
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__close">+</div>
+    <ul class="offcanvas__widget">
+        <li><span class="icon_search search-switch"></span></li>
+        <li>
+            <a href="#">
+                <span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a>
+        </li>
+    </ul>
+    <div class="offcanvas__logo">
+        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__auth">
+        <a href="#">Login</a>
+        <a href="#">Register</a>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="Home" asp-action="index"><i class="bi bi-home"></i> Home</a>
+                    <a href="#">Women’s </a>
+                    <span>Essential structured blazer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__left product__thumb nice-scroll">
+                        @{
+                            var demoImg = "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80";
+                            var mainImg = Model.Product.Product_Imgs.FirstOrDefault(p => p.IsPrimary == true)?.ImageUrl ?? demoImg;
+                            var subImgs = Model.Product.Product_Imgs.Where(p => p.IsPrimary == false).ToList();
+                        }
+                        <a class="pt active" href="#product-1">
+                            <img src="@mainImg" alt="ImgProductDetail">
+                        </a>
+                        @{
+                            var count = 2;
+                        }
+                        @if (subImgs.Count > 0)
+                        {
+                            foreach (var img in subImgs)
+                            {
+                                <a class="pt" href="#product-@count">
+                                    <img src="@(img.ImageUrl ?? demoImg)" alt="ImgProductDetail">
+                                </a>
+                                count++;
+                            }
+                        }
+                        else
+                        {
+                            <a class="pt" href="#product-2">
+                                <img src="@demoImg" alt="ImgProductDetail">
+                            </a>
+                        }
+                        <a class="pt active" href="#product-1">
+                            <img src="@mainImg" alt="ImgProductDetail">
+                        </a>
+                    </div>
+
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <!-- Ảnh chính -->
+                            <img data-hash="product-1" class="product__big__img" src="@mainImg" alt="">
+
+                            <!-- Ảnh phụ -->
+                            @{
+                                int index = 2;
+                            }
+                            @if (subImgs.Count > 0)
+                            {
+                                foreach (var img in subImgs)
+                                {
+                                    <img data-hash="product-@index" class="product__big__img" src="@(img.ImageUrl ?? demoImg)" alt="">
+                                    index++;
+                                }
+                            }
+                            else
+                            {
+                                <img data-hash="product-2" class="product__big__img" src="@demoImg" alt="">
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text">
+                    <h3> @Model.Product.Name<span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
+                    <div class="rating">
+                        <i class="bi bi-star-fill" style="color: #FFD43B;"></i>
+                        <i class="bi bi-star-fill" style="color: #FFD43B;"></i>
+                        <i class="bi bi-star-fill" style="color: #FFD43B;"></i>
+                        <i class="bi bi-star-fill" style="color: #FFD43B;"></i>
+                        <i class="bi bi-star" style="color: #FFD43B;"></i>
+                        <span>( 138 reviews )</span>
+                    </div>
+                    <div class="product__details__price">@Model.Product.Variants.FirstOrDefault()?.Price.ToString("N0") vnđ <span> 830000 vnđ </span></div>
+                    <p>
+                        @Model.Product.Description
+                    </p>
+
+                    @using System.Text.Json
+                    @{
+                        var variantMap = Model.Product.Variants.Select(v => new
+                        {
+                            id = v.Id,
+                            color = v.ColorId,
+                            size = v.Size,
+                            price = v.Price,
+                            inStock = v.Stock,
+                            isDefault = v.IsDefault
+                        }).ToList();
+
+                        var variantJson = JsonSerializer.Serialize(variantMap);
+                    }
+
+
+
+                    <div class="product__details__widget">
+                        <ul>
+
+                            <li>
+                                <span>Màu sắc:</span>
+                                <div class="color__checkbox" id="ColorGroup">
+                                    @foreach (var color in Model.Product.Variants.Select(v => v.ColorId).Distinct())
+                                    {
+                                        <label class="color-item" data-value="@color">
+                                            <input type="radio" name="ColorId" value="@color" />
+                                            <span class="checkmark @color-bg"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </li>
+                            <li>
+                                <span>Kích cỡ:</span>
+                                <div class="size__btn" id="SizeGroup">
+                                    @foreach (var size in Model.Product.Variants.Select(s => s.Size).Distinct())
+                                    {
+                                        <label class="size-item" data-value="@size">
+                                            <input type="radio" name="Size" value="@size" />
+                                            <span>@size</span>
+                                        </label>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="product__details__button">
+                        <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.Product.Id" method="post" id="addForm">
+                            @Html.AntiForgeryToken()
+
+                            <!-- Hidden để post VariantId  -->
+                            <input type="hidden" name="VariantId" id="VariantId" />
+
+                            <div class="quantity">
+                                <span>Số lượng:</span>
+                                <div class="pro-qty">
+                                    <input type="number" value="1" name="Quantity" min="1" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="cart-btn" id="btnAdd" disabled>
+                                <i class="bi bi-bag"></i> Thêm vào giỏ hàng
+                            </button>
+                        </form>
+
+
+                    </div>
+                    @section Scripts {
+                        <script>
+                            const variantMap = @Html.Raw(variantJson);
+
+                            const $btnAdd = $('#btnAdd');
+                            const $variantId = $('#VariantId');
+                            const $price = $('#priceDisplay');
+
+                            let selected = { color: null, size: null };
+
+                            // Helpers
+                            const getSizesForColor = (color) =>
+                                new Set(variantMap.filter(v => v.color === color && (v.inStock ?? true)).map(v => v.size));
+
+                            const getColorsForSize = (size) =>
+                                new Set(variantMap.filter(v => v.size === size && (v.inStock ?? true)).map(v => v.color));
+
+                            const findVariant = (color, size) =>
+                                variantMap.find(v => v.color === color && v.size === size && (v.inStock ?? true));
+
+                            function updateUIAvailability() {
+                                // Lọc SIZE theo MÀU
+                                if (selected.color) {
+                                    const sizesAvailable = getSizesForColor(selected.color);
+                                    $('#SizeGroup .size-item').each(function () {
+                                        const val = $(this).data('value');
+                                        const enabled = sizesAvailable.has(val);
+                                        $(this).toggleClass('disabled', !enabled);
+                                        $(this).find('input[type=radio]').prop('disabled', !enabled);
+                                        if (!enabled && $(this).find('input').prop('checked')) {
+                                            $(this).find('input').prop('checked', false);
+                                            selected.size = null;
+                                        }
+                                    });
+                                } else {
+                                    $('#SizeGroup .size-item').each(function () {
+                                        $(this).removeClass('disabled');
+                                        $(this).find('input[type=radio]').prop('disabled', false);
+                                    });
+                                }
+
+                                // MÀU: luôn enable; nếu đã chọn Size thì chỉ làm mờ màu không hợp
+                                $('#ColorGroup .color-item').each(function () {
+                                    $(this).removeClass('disabled');
+                                    $(this).find('input[type=radio]').prop('disabled', false);
+                                });
+
+                                if (selected.size) {
+                                    const colorsForSize = getColorsForSize(selected.size);
+                                    $('#ColorGroup .color-item').each(function () {
+                                        const val = $(this).data('value');
+                                        $(this).toggleClass('muted', !colorsForSize.has(val));
+                                    });
+                                } else {
+                                    $('#ColorGroup .color-item').removeClass('muted');
+                                }
+                            }
+
+                            function refreshVariantSelection() {
+                                const variant = (selected.color && selected.size)
+                                    ? findVariant(selected.color, selected.size)
+                                    : null;
+
+                                if (variant) {
+                                    $variantId.val(variant.id);
+                                    $btnAdd.prop('disabled', false);
+                                    if ($price.length && variant.price != null) {
+                                        try { $price.text(Number(variant.price).toLocaleString('vi-VN') + ' ₫'); } catch { }
+                                    }
+                                } else {
+                                    $variantId.val('');
+                                    $btnAdd.prop('disabled', true);
+                                }
+                            }
+
+                            function pickDefaultVariantIfAny() {
+                                const def = variantMap.find(v => v.isDefault && (v.inStock ?? true));
+                                if (!def) return; // không có mặc định hợp lệ thì thôi
+
+                                selected.color = def.color;
+                                selected.size = def.size;
+
+                                // check radio tương ứng (nếu có trong DOM)
+                                $(`#ColorGroup input[name=ColorId][value="${def.color}"]`).prop('checked', true);
+                                $(`#SizeGroup  input[name=Size][value="${def.size}"]`).prop('checked', true);
+
+                                updateUIAvailability();
+                                refreshVariantSelection();
+                            }
+
+                            // Events
+                            $(document).on('change', 'input[name=ColorId]', function () {
+                                selected.color = this.value || null;
+
+                                // Nếu Size hiện tại không tồn tại ở màu mới → bỏ chọn Size
+                                if (selected.size) {
+                                    const sizesForNewColor = getSizesForColor(selected.color);
+                                    if (!sizesForNewColor.has(selected.size)) {
+                                        selected.size = null;
+                                        $('#SizeGroup input[name=Size]').prop('checked', false);
+                                    }
+                                }
+
+                                updateUIAvailability();
+                                refreshVariantSelection();
+                            });
+
+                            $(document).on('change', 'input[name=Size]', function () {
+                                selected.size = this.value || null;
+
+                                // Nếu Màu hiện tại không tồn tại ở size mới → bỏ chọn Màu
+                                if (selected.color) {
+                                    const colorsForNewSize = getColorsForSize(selected.size);
+                                    if (!colorsForNewSize.has(selected.color)) {
+                                        selected.color = null;
+                                        $('#ColorGroup input[name=ColorId]').prop('checked', false);
+                                    }
+                                }
+
+                                updateUIAvailability();
+                                refreshVariantSelection();
+                            });
+
+                            // Khởi tạo
+                            updateUIAvailability();
+                            refreshVariantSelection();
+                            pickDefaultVariantIfAny(); // <<< GỌI Ở ĐÂY
+
+                            // Phòng hờ: thiếu VariantId thì chặn submit
+                            $('#addForm').on('submit', function (e) {
+                                if (!$variantId.val()) {
+                                    e.preventDefault();
+                                    alert('Vui lòng chọn đủ Màu sắc và Kích cỡ hợp lệ.');
+                                }
+                            });
+                        </script>
+                        <style>
+                            .color-item, .size-item {
+                                cursor: pointer;
+                                margin-right: .5rem;
+                                display: inline-flex;
+                                align-items: center;
+                                gap: .25rem;
+                            }
+
+                                .color-item input, .size-item input {
+                                    display: none;
+                                }
+
+                                .size-item span, .checkmark {
+                                    border: 1px solid #ddd;
+                                    padding: .25rem .5rem;
+                                    border-radius: .5rem;
+                                }
+
+                                .color-item input:checked + .checkmark,
+                                .size-item input:checked + span {
+                                    border-color: #222;
+                                    font-weight: 600;
+                                }
+
+                            .disabled {
+                                opacity: .35;
+                                pointer-events: none;
+                            }
+
+                            .product__details__widget .size__btn .size-item span {
+                                display: inline-grid;
+                                place-items: center;
+                                width: 28px;
+                                height: 28px;
+                                padding: 0;
+                                font-size: .9rem;
+                                border: 1px solid #ddd;
+                                border-radius: .5rem;
+                                line-height: 1;
+                                box-sizing: border-box;
+                            }
+
+                            .product__details__widget .size__btn .size-item input:checked + span {
+                                border: 1px solid #222 !important;
+                                background: #fff;
+                                font-weight: 600;
+                            }
+
+                        </style>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Mô tả</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Reviews ( 2 )</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <h6>Mô tả sản phẩm</h6>
+                            <p>
+                                @Model.Product.Description
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <h6>Review</h6>
+                            <p>
+                               Sản phẩm thật tuyệt.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="related__title">
+                    <h5>SẢN PHẨM LIÊN QUAN</h5>
+                </div>
+            </div>
+            @await Html.PartialAsync("_RelatedProduct", Model.RelatedProduct)
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->

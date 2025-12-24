@@ -1,0 +1,267 @@
+﻿@{
+    ViewData["Title"] = "Tất cả sản phẩm";
+}
+@model IEnumerable<WebBH.Models.Product> //đại diện của products từ controller
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="Home" asp-action="Index"><i class="bi bi-house-door-fill"></i> Home</a>
+                    <span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            @* Filter area *@
+            <div class="col-lg-3 col-md-3">
+                <div class="shop__sidebar">
+
+             
+                    <div class="sidebar__categories">
+                        <div class="section-title">
+                            <h4>Thể loại</h4>
+                        </div>
+                        <div class="categories__accordion">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-heading active">
+                                        <a data-toggle="collapse" data-target="#collapseOne">Women</a>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><a href="#">Coats</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">T-shirts</a></li>
+                                                <li><a href="#">Jeans</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseTwo">Men</a>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><a href="#">Coats</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">T-shirts</a></li>
+                                                <li><a href="#">Jeans</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseThree">Kids</a>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><a href="#">Coats</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">T-shirts</a></li>
+                                                <li><a href="#">Jeans</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFour">Accessories</a>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><a href="#">Coats</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">T-shirts</a></li>
+                                                <li><a href="#">Jeans</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFive">Cosmetic</a>
+                                    </div>
+                                    <div id="collapseFive" class="collapse" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><a href="#">Coats</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Dresses</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">T-shirts</a></li>
+                                                <li><a href="#">Jeans</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar__sizes">
+                        <div class="section-title">
+                            <h4>Giá</h4>
+                        </div>
+                        <div class="size__list">
+                            <label for="price1">
+                                Dưới 300K
+                                <input type="radio" name="PriceRange" id="price1" value="Under300">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="price2">
+                                300K - 500K
+                                <input type="radio" name="PriceRange" id="price2" value="300to500">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="price3">
+                                Trên 500K
+                                <input type="radio" name="PriceRange" id="price3" value="Above500">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="sidebar__sizes">
+                        <div class="section-title">
+                            <h4>Kích cỡ</h4>
+                        </div>
+                        <div class="size__list">
+                            <label for="xxs">
+                                xxs
+                                <input type="checkbox" id="xxs" name="Size" value="XXS">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="xs">
+                                xs
+                                <input type="checkbox" id="xs" name="Size" value="XS">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="xss">
+                                xs-s
+                                <input type="checkbox" id="xss" name="Size" value="XS-S">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="s">
+                                s
+                                <input type="checkbox" id="s" name="Size" value="S">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="m">
+                                m
+                                <input type="checkbox" id="m" name="Size" value="M">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="ml">
+                                m-l
+                                <input type="checkbox" id="ml" name="Size" value="M-L">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="l">
+                                l
+                                <input type="checkbox" id="l" name="Size" value="L">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="xl">
+                                xl
+                                <input type="checkbox" id="xl" name="Size" value="XL">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="sidebar__color">
+                        <div class="section-title">
+                            <h4>Màu</h4>
+                        </div>
+                        <div class="size__list color__list">
+                            <label for="black">
+                                Đen
+                                <input type="checkbox" id="black" name="Color" value="Black">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="whites">
+                                Trắng
+                                <input type="checkbox" id="whites" name="Color" value="White">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="reds">
+                                Đỏ
+                                <input type="checkbox" id="reds" name="Color" value="Red">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label for="greys">
+                                Xám
+                                <input type="checkbox" id="greys" name="Color" value="Grey">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label>
+                                Xanh dương
+                                <input type="checkbox" id="blues" name="Color" value="Blue">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label>
+                                Màu be
+                                <input type="checkbox" id="beige" name="Color" value="Beige">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label>
+                                Xanh lá
+                                <input type="checkbox" id="greens" name="Color" value="Green">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label>
+                                Vàng
+                                <input type="checkbox" id="yellows" name="Color" value="Yellow">
+                                <span class="checkmark"></span>
+                            </label>
+
+
+                        </div>                           
+                    </div>
+    
+                </div>
+           
+            </div>
+            @* ProductS display area *@
+            <div class="col-lg-9 col-md-9">
+                <div id="productList" class="row">
+                    @* @await Html.PartialAsync("_ProductList", Model) *@
+                    @Html.Partial("_ProductList", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+
+
+
+

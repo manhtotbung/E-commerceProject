@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model IEnumerable<WebBH.Models.Product>
+
+<!-- Home Banner -->
+<section class="banner" style="background: url('/img/banner/banner-1.jpg') center center/cover no-repeat; height: 350px; display: flex; align-items: center;">
+    <div class="container text-center text-white">
+        <h1 class="display-4" style="color: #000; text-shadow: 1px 1px 8px #fff;">Chào mừng đến với Von Dutch</h1>
+        <p class="lead" style="color: #000; text-shadow: 1px 1px 8px #fff;">Khám phá bộ sưu tập mới nhất của chúng tôi!</p>
+        <a href="/Product/Index" class="primary-btn">Mua ngay</a>
+    </div>
+</section>
+
+<!-- Sản phẩm nổi bật -->
+<section class="product spad">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h4 style="color: #ca1515; font-weight: bold; letter-spacing: 2px;">Sản phẩm nổi bật</h4>
+        </div>
+        <div class="row">
+            @foreach (var product in Model.Take(8))
+            {
+                var demoImg = "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80";
+                var imgUrl = product.Product_Imgs.FirstOrDefault(p => p.IsPrimary == true)?.ImageUrl ?? demoImg;
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="product__item h-100">
+                        <div class="product__item__pic set-bg" data-setbg="@imgUrl" style="height: 250px; background-size:cover; background-position:center; border-radius:10px;">
+                            <ul class="product__hover">
+                                <li><a href="@imgUrl" class="image-popup"><i class="bi bi-arrows-angle-expand"></i></a></li>
+                                <li><a href="#" class="add-to-favorites"><i class="bi bi-heart"></i></a></li>
+                                <li><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@product.Id" class="add-to-cart"><i class="bi bi-bag"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text text-center pt-3">
+                            <h6 style="color: #222; font-weight: 600;"><a asp-controller="Product" asp-action="ProductDetail" asp-route-id="@product.Id" style="color: #222;">@product.Name</a></h6>
+                            <div class="product__price" style="color: #ca1515; font-size: 18px; font-weight: bold;">
+                                @if (product.Variants != null && product.Variants.Any())
+                                {
+                                    <span>@product.Variants.Min(v => v.Price).ToString("N0") đ</span>
+                                }
+                                else
+                                {
+                                    <span style="color: #888;">Liên hệ</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a href="/Product/Index" class="site-btn">Xem tất cả sản phẩm</a>
+            </div>
+        </div>
+    </div>
+</section>
+
