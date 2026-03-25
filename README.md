@@ -56,7 +56,7 @@ Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, A
 - **Logging**: Log lỗi.
 - **Authentication/Authorization**: Tùy mức bảo mật.
 
-## 4. Đóng góp & phát triển
+## 3. Đóng góp & phát triển
 
 - Fork, tạo nhánh, gửi pull request hoặc issue.
 - Đọc code trong từng thư mục để hiểu cấu trúc/luồng dữ liệu.
