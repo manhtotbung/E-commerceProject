@@ -1,6 +1,6 @@
 # E-commerceProject
 
-Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, ASP.NET Core MVC) với Docker hỗ trợ đóng gói, triển khai dễ dàng. Giao diện kết hợp HTML/CSS/JavaScript, tổ chức theo kiến trúc chuẩn.
+Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, ASP.NET Core MVC) đóng gói với Docker. Giao diện kết hợp HTML/CSS/JavaScript.
 
 ## 1. Key feature (Chức năng nổi bật)
 
