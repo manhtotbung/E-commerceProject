@@ -2,27 +2,7 @@
 
 Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, ASP.NET Core MVC) với Docker hỗ trợ đóng gói, triển khai dễ dàng. Giao diện kết hợp HTML/CSS/JavaScript, tổ chức theo kiến trúc chuẩn.
 
-## 1. Kiến trúc & Thành phần chính
-
-- **WebBHApplication.sln**: Solution Visual Studio cho toàn project.
-- **/WebBH/**: Thư mục mã nguồn chính.
-  - **Controllers**: Xử lý logic nghiệp vụ.
-  - **Models**: Các thực thể dữ liệu (sản phẩm, user, đơn hàng...).
-  - **Views**: Giao diện động (cshtml).
-  - **Areas**: Chia module lớn (ADMIN, User).
-  - **Data**: Kết nối database.
-  - **Respositories**: Quản lý truy xuất dữ liệu pattern Repository.
-  - **ViewComponents**: UI thành phần dùng lại.
-  - **Constants, Extensions**: Cấu hình & mở rộng.
-  - **Properties**: Cấu hình ứng dụng.
-  - **wwwroot**: File tĩnh (ảnh, css, js...)
-  - **appsettings.json / appsettings.Development.json**: Tham số DB, secrets.
-  - **WebBH.csproj**: File build thông tin cho ASP.NET Core.
-  - **Program.cs**: Main app, setup service, middlewares.
-- **/Dockerfile**: Script docker build image.
-- **/.gitignore**: Loại trừ file không cần thiết khỏi phiên bản hóa.
-
-## 2. Key feature (Chức năng nổi bật)
+## 1. Key feature (Chức năng nổi bật)
 
 - Quản lý sản phẩm: CRUD, tìm kiếm, danh mục.
 - Quản lý user/khách hàng: Đăng ký, đăng nhập, phân quyền.
@@ -32,7 +12,7 @@ Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, A
 - Trang Admin: Quản lý sản phẩm, user, đơn hàng, báo cáo.
 - Phụ trợ: Quản lý profile, đổi mật khẩu, phân trang, thông báo.
 
-## 3. Hướng dẫn cài đặt & triển khai
+## 2. Hướng dẫn cài đặt & triển khai
 
 ### Yêu cầu
 - Visual Studio 2022+ (hoặc .NET 6 SDK+)
