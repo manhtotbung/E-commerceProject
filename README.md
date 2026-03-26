@@ -1,62 +1,63 @@
 # E-commerceProject
 
-Dự án xây dựng website thương mại điện tử dựa trên .NET (C#, ASP.NET Core MVC) đóng gói với Docker. Giao diện kết hợp HTML/CSS/JavaScript.
+This project builds an e-commerce website based on .NET (C#, ASP.NET Core MVC) packaged with Docker. The interface uses a combination of HTML/CSS/JavaScript.
 
-## 1. Key feature (Chức năng nổi bật)
+## 1. Key Features
 
-- Quản lý sản phẩm: CRUD, tìm kiếm, danh mục.
-- Quản lý user/khách hàng: Đăng ký, đăng nhập, phân quyền.
-- Giỏ hàng & thanh toán: Thêm/xoá sản phẩm, đặt đơn, xác nhận.
-- Quản lý đơn hàng: Lịch sử, trạng thái, cập nhật đơn.
-- Trang khách hàng: Hiển thị sản phẩm, tìm kiếm, lọc, trang chủ...
-- Trang Admin: Quản lý sản phẩm, user, đơn hàng, báo cáo.
-- Phụ trợ: Quản lý profile, đổi mật khẩu, phân trang, thông báo.
+- Product Management: CRUD, search, categories.
+- User/Customer Management: Register, login, role-based access.
+- Cart & Checkout: Add/remove products, place orders, confirmation.
+- Order Management: History, status, update orders.
+- Customer Page: Display products, search, filter, homepage...
+- Admin Page: Manage products, users, orders, reports.
+- Additional: Profile management, change password, pagination, notification.
 
-## 2. Hướng dẫn cài đặt & triển khai
+## 2. Installation & Deployment Guide
 
-### Yêu cầu
-- Visual Studio 2022+ (hoặc .NET 6 SDK+)
-- Docker (dùng container)
+### Requirements
+- Visual Studio 2022+ (or .NET 6 SDK+)
+- Docker (for containerization)
 - SQL Server
 - Git
 
-### Cài đặt local không dùng Docker
+### Local Installation Without Docker
 
-1. Clone repo:
-   ```sh
-   git clone https://github.com/manhtotbung/E-commerceProject.git
-   cd E-commerceProject/WebBH
-   ```
-2. Mở solution `WebBHApplication.sln` với Visual Studio, restore NuGet.
-3. Cấu hình file `appsettings.json`:
-   ```json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=localhost;Database=TenDatabase;User Id=sa;Password=matkhaucuaban;"
-     }
-   }
-   ```
-4. Khởi tạo database (dùng migration hoặc thủ công).
-5. Chạy ứng dụng (F5 hoặc `dotnet run` trong `/WebBH`).
+1. Clone the repo:
+    ```sh
+    git clone https://github.com/manhtotbung/E-commerceProject.git
+    cd E-commerceProject/WebBH
+    ```
+2. Open the solution `WebBHApplication.sln` with Visual Studio, restore NuGet packages.
+3. Configure the `appsettings.json` file:
+    ```json
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost;Database=YourDatabase;User Id=sa;Password=yourpassword;"
+      }
+    }
+    ```
+4. Initialize the database (using migration or manually).
+5. Run the application (F5 in Visual Studio or `dotnet run` in `/WebBH`).
 
-### Cài đặt và deploy bằng Docker
+### Installation & Deployment with Docker
 
-1. Build image:
-   ```sh
-   docker build -t e-commerce:latest .
-   ```
-2. Run container:
-   ```sh
-   docker run -e "ConnectionStrings__DefaultConnection=..." -p 8080:80 e-commerce:latest
-   ```
-3. Truy cập: http://localhost:8080
+1. Build the image:
+    ```sh
+    docker build -t e-commerce:latest .
+    ```
+2. Run the container:
+    ```sh
+    docker run -e "ConnectionStrings__DefaultConnection=..." -p 8080:80 e-commerce:latest
+    ```
+3. Access: http://localhost:8080
 
-### Biến cấu hình quan trọng
-- **ConnectionStrings:DefaultConnection**: Kết nối SQL Server.
-- **Logging**: Log lỗi.
-- **Authentication/Authorization**: Tùy mức bảo mật.
+### Important Configuration Variables
 
-## 3. Đóng góp & phát triển
+- **ConnectionStrings:DefaultConnection**: SQL Server connection string.
+- **Logging**: Error logging.
+- **Authentication/Authorization**: Security settings as required.
 
-- Fork, tạo nhánh, gửi pull request hoặc issue.
-- Đọc code trong từng thư mục để hiểu cấu trúc/luồng dữ liệu.
+## 3. Contribution & Development
+
+- Fork, create a branch, submit pull requests or issues.
+- Read the code in each folder to understand the structure/data flow.
